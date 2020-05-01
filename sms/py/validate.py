@@ -15,14 +15,20 @@ def validate_number(key, number, country_code):
     ''' Return a tuple with information about a phone number '''
 
     access_key = f"access_key={key}"
-    number_ = f"&number={number}"
+    number = f"&number={int(number)}"
     country_code = f"&country_code={country_code}"
 
-    # result = requests.get(api)
+    api = f'{endpoint}{access_key}{number}{country_code}'
 
-    # if result.status_code == 200:
-    #     response = json.loads(result.content)
-    #     return response['valid']
+    # print(api)
+    result = requests.get(api)
+
+    if result.status_code == 200:
+        response = json.loads(result.content)
+        # print(response)
+        if 'valid' not in response:
+            return None
+        return response['valid']
 
 
 if __name__ == "__main__":
@@ -31,23 +37,29 @@ if __name__ == "__main__":
 
     assert isinstance(user_access_key, str) and len(user_access_key) > 5
 
-    print('\nRISING ACADEMY NETWORK Phone Number Verification')
+    print('\nPHONE NUMBER VERIFICATION')
     print(f'USER ACCESS KEY: {user_access_key}')
     print(f'COUNTRY CODE: {country_code}')
     print('-' * 80)
 
     data = pd.read_csv("../data/numbers.csv")
+    total = (data.checked == False).sum()
 
     is_valid, is_valid_count = [], 0
 
-    for i, row in tqdm(data.iterrows()):
-        valid_ = validate_number(user_access_key, row.number, country_code)
+    for i, row in tqdm(data.iterrows(), total=total):
 
-        is_valid.append(valid_)
+        if row.checked is False:
+            valid_ = validate_number(user_access_key, row.number, country_code)
 
-        if valid_:
-            is_valid_count_ += 1
+            if valid_:
+                is_valid_count += 1
+                data.loc[i, 'is_valid'] = True
 
-    data = data.assign(is_valid=is_valid)
+            if valid_ is None:
+                break
+
+            data.loc[i, 'checked'] = True
+
     data.to_csv("../data/numbers_validated.csv", index=False)
-    print(f'{is_valid_count / data.shape[0]} valid numbers founds.')
+    print(f'{is_valid_count / data.shape[0] * 100:.1%} valid numbers found.')
