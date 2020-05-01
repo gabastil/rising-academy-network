@@ -42,5 +42,5 @@ if __name__ == "__main__":
             is_valid_count_ += 1
 
     data = data.assign(is_valid=is_valid)
-    data.to_csv("numbers_validated.csv", index=False)
+    data.to_csv("../data/numbers_validated.csv", index=False)
     print(f'{is_valid_count / data.shape[0]} valid numbers founds.')
