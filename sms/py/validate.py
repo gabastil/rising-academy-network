@@ -18,11 +18,11 @@ def validate_number(key, number, country_code):
     number_ = f"&number={number}"
     country_code = f"&country_code={country_code}"
 
-    # result = requests.get(api)
+    result = requests.get(api)
 
-    # if result.status_code == 200:
-    #     response = json.loads(result.content)
-    #     return response['valid']
+    if result.status_code == 200:
+        response = json.loads(result.content)
+        return response['valid']
 
 
 if __name__ == "__main__":
