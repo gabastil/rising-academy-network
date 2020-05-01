@@ -9,32 +9,39 @@ from tqdm import tqdm
 import pandas as pd
 import requests
 
+endpoint = "http://apilayer.net/api/validate?"
 
-def validate_number(key, number):
+def validate_number(key, number, country_code):
     ''' Return a tuple with information about a phone number '''
 
-    api = f"http://apilayer.net/api/validate?access_key={key}&number={number}"
-    result = requests.get(api)
+    access_key = f"access_key={key}"
+    number_ = f"&number={number}"
+    country_code = f"&country_code={country_code}"
 
-    if result.status_code == 200:
-        response = json.loads(result.content)
-        return response['valid']
+    # result = requests.get(api)
+
+    # if result.status_code == 200:
+    #     response = json.loads(result.content)
+    #     return response['valid']
 
 
 if __name__ == "__main__":
     user_access_key = argv[1]
+    country_code = argv[2]
 
     assert isinstance(user_access_key, str) and len(user_access_key) > 5
 
     print('\nRISING ACADEMY NETWORK Phone Number Verification')
-    print(f'USER ACCESS KEY: {user_access_key}\n{"-":-<80}')
+    print(f'USER ACCESS KEY: {user_access_key}')
+    print(f'COUNTRY CODE: {country_code}')
+    print('-' * 80)
 
     data = pd.read_csv("../data/numbers.csv")
 
     is_valid, is_valid_count = [], 0
 
     for i, row in tqdm(data.iterrows()):
-        valid_ = validate_number(user_access_key, row.number)
+        valid_ = validate_number(user_access_key, row.number, country_code)
 
         is_valid.append(valid_)
 
