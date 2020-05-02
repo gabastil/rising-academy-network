@@ -13,6 +13,12 @@ $ python -m validate {USER_ACCESS_KEY} {COUNTRY_CODE}
 
 `COUNTRY_CODE` is a 2-letter code corresponding to the country the dataset's phone numbers originate from.
 
+Here's an example with a made up `USER_ACCESS_KEY` and `COUNTRY_CODE`:
+
+```
+$ python -m validate a14bcd13efg12h11ij10k9l8mn7op6987 US
+```
+
 ### Full List of Countries and Country Codes
 Full Name | 2-Letter Code | 3-Letter Code | Numeric
 --- | --- | --- | ---
