@@ -4,9 +4,10 @@
 # description: A simple script to validate phone numbers
 
 from sys import argv
+from tqdm import tqdm
+import pandas as pd
 import requests
 import json
-import csv
 
 url = "http://apilayer.net/api/validate?access_key={}&number={}&country_code={}"
 
@@ -35,52 +36,38 @@ def validate(access_key, number, country_code):
             return response['valid']
 
 
-def read_csv(path):
-    numbers = []
-    with open(path) as numbers_data:
-        for line in csv.reader(numbers_data):
-            numbers.append(line)
-    return numbers
-
-
-def to_csv(data, path):
-    data = [','.join(line) for line in data]
-    with open(path, 'w') as numbers_data:
-        data = '\n'.join(data)
-        numbers_data.write(data)
-
-
-def is_checked(check):
-    ''' Determine if the number has already been checked '''
-    return check.lower().startswith('t')
-
-
 if __name__ == "__main__":
     user_access_key, country_code = argv[1:3]
     data_path = "../data/numbers.csv"
-    print(f'Phone Number Verification with Key {user_access_key}\n{"":-<80}')
 
     # Ensure user access key is of valid type and length
     assert isinstance(user_access_key, str) and len(user_access_key) < 33
 
-    header, *numbers = read_csv(data_path)
+    header = 'Phone Number Verification\nUser Access Key:{}\nCountry Code:{}\n'
+    print(header.format(user_access_key, country_code))
 
-    # Assumes indices : 'number' at 0, 'is_valid' at 1, 'checked' at 2
-    for row in numbers:
+    data = pd.read_csv(data_path)
 
-        if is_checked(row[2]):
-            result = validate(user_access_key, int(row[0]), country_code)
+    total = (data.checked == False).sum()
+    count = 0
+
+    for i, row in tqdm(data.iterrows(), total=total):
+
+        if row.checked == False:
+            result = validate(user_access_key, int(row.number), country_code)
 
             if result is None:
-                print('Call limit likely reached.')
                 break
 
-            row[1] = 'False'
+            elif result:
+                count += 1
+                data.loc[i, 'is_valid'] = True
 
-            if result:
-                row[1] = 'True'
+            else:
+                data.loc[i, 'is_valid'] = False
 
-            row[2] = 'True'
+            data.loc[i, 'checked'] = True
 
-    to_csv([header] + numbers, data_path)
-    print(f'Verification loop completed.')
+    data.to_csv(data_path, index=False)
+    percent = count / total * 100
+    print(f'{percent:.1%} of {total} are valid.')
