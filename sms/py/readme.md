@@ -1,5 +1,4 @@
 # Validate.py
----
 Glenn Abastillas | May 1, 2020
 
 ### Running Script
