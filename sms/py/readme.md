@@ -1,7 +1,7 @@
 # Validate.py
 Glenn Abastillas | May 1, 2020
 
-### Running Script
+### How to Use
 
 Open `terminal` or `cmd`, navigate to this script's folder, and use the following command:
 
@@ -9,17 +9,22 @@ Open `terminal` or `cmd`, navigate to this script's folder, and use the followin
 $ python -m validate {USER_ACCESS_KEY} {COUNTRY_CODE}
 ```
 
-`USER_ACCESS_KEY` is a 32-digit key that can be obtained by creating an account with http://www.numverify.com.
+`USER_ACCESS_KEY` is a 32-digit key that can be obtained by creating an account with [Numverify](http://www.numverify.com).
 
 `COUNTRY_CODE` is a 2-letter code corresponding to the country the dataset's phone numbers originate from.
 
-Here's an example with a made up `USER_ACCESS_KEY` and `COUNTRY_CODE`:
+Here's an example with a made up `USER_ACCESS_KEY` and `COUNTRY_CODE` for the United States of America:
 
 ```
-$ python -m validate a14bcd13efg12h11ij10k9l8mn7op6987 US
+$ python -m validate a14bcd13efg12h11ij10k9l8mn7op698 US
 ```
+
+This script reads and writes from a `numbers.csv` document in the `data` folder. This document needs to contain the following columns: `number`, `is_valid`, and `checked`.
 
 ### Full List of Countries and Country Codes
+
+[Click here to navigate to source of all codes below.](https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=1&cad=rja&uact=8&ved=2ahUKEwiq3ZnexpXpAhUQhHIEHXl3BYgQFjAAegQIAxAB&url=https%3A%2F%2Fwww.iban.com%2Fcountry-codes&usg=AOvVaw1S91ARxH801VYxs3gqhqry)
+
 Full Name | 2-Letter Code | 3-Letter Code | Numeric
 --- | --- | --- | ---
 Afghanistan | AF | AFG | 004
