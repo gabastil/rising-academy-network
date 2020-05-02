@@ -50,7 +50,7 @@ def to_csv(data, path):
         numbers_data.write(data)
 
 
-def is_checked(check):
+def checked(check):
     ''' Determine if the number has already been checked '''
     return check.lower().startswith('t')
 
@@ -68,7 +68,7 @@ if __name__ == "__main__":
     # Assumes indices : 'number' at 0, 'is_valid' at 1, 'checked' at 2
     for row in numbers:
 
-        if is_checked(row[2]):
+        if not checked(row[2]):
             result = validate(user_access_key, int(row[0]), country_code)
 
             if result is None:
