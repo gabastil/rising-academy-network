@@ -55,7 +55,7 @@ def read_csv(path):
 
 def to_csv(data, path):
     with open(path, 'w', newline='') as numbers_csv:
-        writer = csv.writer(numers_csv)
+        writer = csv.writer(numbers_csv)
         for row in data:
             writer.writerow(row)
 
@@ -88,4 +88,4 @@ if __name__ == "__main__":
             row[2] = 'True'
 
     to_csv(numbers, data_path)
-    print(f'{"":-<80}\nVerification Process Completed')
+    print(f'\nVerification Process Completed')
