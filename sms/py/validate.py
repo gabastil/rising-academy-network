@@ -14,13 +14,13 @@ url = "http://apilayer.net/api/validate?"
 
 
 def validate(access_key, number, country_code):
-    ''' Return the validity status of a phone number
+    ''' Return whether or not a phone number is valid
 
         Parameters
         ----------
-            access_key (str) : 32-digit user access key for API
-            number (str, int) : Phone number to check
-            country_code (str) : 2-letter country code for the phone number
+            access_key (str): 32-digit user access key for API
+            number (str, int): Phone number to check
+            country_code (str): 2-letter country code for the phone number
 
         Returns
         -------
@@ -47,16 +47,17 @@ def validate(access_key, number, country_code):
 
 def read_csv(path):
     numbers = []
-    with open(path) as numbers_data:
-        for line in csv.reader(numbers_data):
+    with open(path, newline='') as numbers_csv:
+        for line in csv.reader(numbers_csv):
             numbers.append(line)
     return numbers
 
 
 def to_csv(data, path):
-    data = [','.join(line) for line in data]
-    with open(path, 'w') as numbers_data:
-        numbers_data.write('\n'.join(data))
+    with open(path, 'w', newline='') as numbers_csv:
+        writer = csv.writer(numers_csv)
+        for row in data:
+            writer.writerow(row)
 
 
 def checked(check):
