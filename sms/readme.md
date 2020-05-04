@@ -13,7 +13,7 @@ The [`validate`](./py) script confirms whether or not a dataset contains valid p
 
 ###### Data Format
 
-The `validate` data should contain the following columns:
+The [`validate`](./data) data should contain the following columns:
 
   * number
   * is_valid
