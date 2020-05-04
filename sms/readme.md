@@ -9,7 +9,7 @@ This package contains scripts, modules, and data to process phone numbers to sup
 
 ### Validate <a id='validate'></a>
 
-The [`validate` script]('./py') confirms whether or not a dataset contains valid phone numbers for a specified country.
+The [`validate` script]('/py') confirms whether or not a dataset contains valid phone numbers for a specified country.
 
 ###### Data Format
 
